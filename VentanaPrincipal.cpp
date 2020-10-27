@@ -83,5 +83,7 @@ void VentanaPrincipal::creaMenus(){
 }
 
 void VentanaPrincipal::slotNuevo(){
+    QMessageBox::warning(this, "Editor", "Vas a borrar",
+                        QMessageBox::Yes | QMessageBox::No);
     editorCentral->clear();
 }
