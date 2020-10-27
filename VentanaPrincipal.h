@@ -2,6 +2,7 @@
 #define VENTANAPRINCIPAL_H
 #include <QMainWindow>
 #include <QTextEdit>
+#include <QLabel>
 
 class VentanaPrincipal : public QMainWindow{
 Q_OBJECT
@@ -11,7 +12,26 @@ public:
     
 private:
     QTextEdit * editorCentral;
-    QAction * accionSalir;
+
+    //QActions
+    QAction * accionSalir; 
+    QAction * accionNuevo; 
+    QAction * accionGuardar; 
+    QAction * accionAbrir; 
+    QAction * accionGuardarComo;
+
+    //Menus
+    QMenu *menuArchivo;
+    QMenu *menuEditar;
+
+    QLabel *textoEstado;
+
+    void creaAcciones();
+    void creaMenus();
+
+public slots:
+    void slotNuevo();
+
 };
 
 
