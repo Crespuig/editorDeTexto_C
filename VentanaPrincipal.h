@@ -28,9 +28,13 @@ private:
 
     void creaAcciones();
     void creaMenus();
+    void abrirArchivo(QString);
+    void guardarComo(QString);
 
 public slots:
     void slotNuevo();
+    void slotAbrir();
+    void slotGuardarComo();
 
 };
 
