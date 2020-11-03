@@ -8,6 +8,7 @@
 #include <QTextStream>
 #include <QStringList>
 #include <QDebug>
+#include <QVariant>
 
 VentanaPrincipal::VentanaPrincipal(QWidget *parent) : QMainWindow(parent)
 {
@@ -24,6 +25,8 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent) : QMainWindow(parent)
         //Ancho y alto de la ventana
         resize(800, 600);
 }
+
+/******************************************** CREAR ACCIONES ***************************************************/
 
 void VentanaPrincipal::creaAcciones()
 {
@@ -61,7 +64,19 @@ void VentanaPrincipal::creaAcciones()
         accionGuardarComo->setStatusTip("Guardar como");
         connect(accionGuardarComo, SIGNAL(triggered()),
                 this, SLOT(slotGuardarComo()));
+
+        for (int i = 0; i < MAX_FICHEROS_RECIENTES ; i++){
+                accionesFicherosRecientes[i] = new QAction("", this);
+                accionesFicherosRecientes[i]->setVisible(false);
+                connect(accionesFicherosRecientes[i], SIGNAL(triggered()),
+                        this, SLOT(slotFicherosRecientes()));
+        }
+        
 }
+
+/************************************************************************************************************/
+
+/******************************************** CREAR MENUS ***************************************************/
 
 void VentanaPrincipal::creaMenus()
 {
@@ -73,6 +88,12 @@ void VentanaPrincipal::creaMenus()
         fileMenu->addAction(accionGuardar);
         fileMenu->addAction(accionAbrir);
         fileMenu->addAction(accionGuardarComo);
+        fileMenu->addSeparator();
+
+        for (int i = 0; i < MAX_FICHEROS_RECIENTES; i++){
+                fileMenu->addAction(accionesFicherosRecientes[i]);
+        }
+        
 
         //Menu contextual
         editorCentral->addAction(accionSalir);
@@ -92,6 +113,10 @@ void VentanaPrincipal::creaMenus()
         textoEstado = new QLabel("Aplicación lista para usted");
         statusBar()->addWidget(textoEstado);
 }
+
+/********************************************************************************************************/
+
+/******************************************** METODOS ***************************************************/
 
 void VentanaPrincipal::abrirArchivo(QString ruta)
 {
@@ -140,20 +165,27 @@ void VentanaPrincipal::establecerFicheroActual(const QString & nuevaRuta){
 
         rutaArchivo = nuevaRuta;
 
-        /*if (nomFichRec.contains(rutaArchivo))
-        {
-                nomFichRec.push_front(rutaArchivo);
-        }else{
-                nomFichRec.move(nomFichRec.indexOf(rutaArchivo), 0);
-        }*/
+        //QString nombreCorto = QFileInfo(nuevaRuta).fileName();
+        for (int i = 0; i < MAX_FICHEROS_RECIENTES; i++){
+                accionesFicherosRecientes[i]->setVisible(false);
+        }
 
-        foreach(QString nombre, nomFichRec)
-        {
+        for (int i = 0; i < nomFichRec.length() && i < MAX_FICHEROS_RECIENTES; i++){
+                QString rutaMirada = nomFichRec[i];
+                QString nombreCorto = QFileInfo(rutaMirada).fileName();
+                accionesFicherosRecientes[i]->setText(nombreCorto);
+                accionesFicherosRecientes[i]->setVisible(true);
+
+                QVariant dato(rutaMirada);
+                accionesFicherosRecientes[i]->setData(dato);
+        }
+        
+        foreach(QString nombre, nomFichRec){
                 qDebug() << "Nombre archivo: " << nombre;
         }
 }
 
-
+/*************************************************************************************************/
 
 /******************************************** SLOTS **********************************************/
 void VentanaPrincipal::slotNuevo()
@@ -226,6 +258,16 @@ void VentanaPrincipal::slotGuardar()
         {
                 guardarComo(rutaArchivo);
         }
+}
+
+void VentanaPrincipal::slotFicherosRecientes(){
+        QObject * culpable = sender();
+        QAction * accionCulpable = qobject_cast<QAction*>(culpable);
+        qDebug() << "La entrada de menu que has pinchado es " << accionCulpable->text();
+
+        QVariant dato = accionCulpable->data();
+        QString rutaCompleta = dato.toString();
+        abrirArchivo(rutaCompleta);
 }
 
 

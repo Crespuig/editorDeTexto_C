@@ -9,6 +9,8 @@ Q_OBJECT
 
 public:
     VentanaPrincipal(QWidget *parent = 0);
+
+    static const int MAX_FICHEROS_RECIENTES = 5;
     
 private:
     QTextEdit * editorCentral;
@@ -19,6 +21,8 @@ private:
     QAction * accionGuardar; 
     QAction * accionAbrir; 
     QAction * accionGuardarComo;
+
+    QAction * accionesFicherosRecientes[MAX_FICHEROS_RECIENTES];
 
     //Menus
     QMenu *menuArchivo;
@@ -41,6 +45,7 @@ public slots:
     void slotAbrir();
     void slotGuardarComo();
     void slotGuardar();
+    void slotFicherosRecientes();
 
 };
 
