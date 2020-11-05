@@ -22,6 +22,9 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent) : QMainWindow(parent)
 
         setWindowIcon(QIcon("./images/icon.jpg"));
 
+        //Inicializacion de dialogos
+        dialogoBuscar = NULL;
+
         //Ancho y alto de la ventana
         resize(800, 600);
 }
@@ -71,6 +74,14 @@ void VentanaPrincipal::creaAcciones()
                 connect(accionesFicherosRecientes[i], SIGNAL(triggered()),
                         this, SLOT(slotFicherosRecientes()));
         }
+
+        accionBuscar = new QAction("Buscar", this);
+        accionBuscar->setIcon(QIcon("./images/buscar.jpg"));
+        accionBuscar->setShortcut(QKeySequence(tr("Ctrl+d")));
+        accionBuscar->setStatusTip("Buscar en documento");
+        accionBuscar->setToolTip("Buscar en documento");
+        connect(accionBuscar, SIGNAL(triggered()),
+                this, SLOT(slotDialogoBuscar()));
         
 }
 
@@ -93,6 +104,10 @@ void VentanaPrincipal::creaMenus()
         for (int i = 0; i < MAX_FICHEROS_RECIENTES; i++){
                 fileMenu->addAction(accionesFicherosRecientes[i]);
         }
+
+        //Menu editar
+        menuEditar = barra->addMenu(QString("Editar"));
+        menuEditar->addAction(accionBuscar);
         
 
         //Menu contextual
@@ -268,6 +283,27 @@ void VentanaPrincipal::slotFicherosRecientes(){
         QVariant dato = accionCulpable->data();
         QString rutaCompleta = dato.toString();
         abrirArchivo(rutaCompleta);
+}
+
+void VentanaPrincipal::slotDialogoBuscar(){
+        //DIALOGO MODAL
+        /*FindDialog dialogoOtro(this);
+        dialogoOtro.exec();*/
+
+        //DIALOGO NO MODAL
+        if (dialogoBuscar == NULL){
+                dialogoBuscar = new FindDialog(this);
+
+                connect(dialogoBuscar, 
+                SIGNAL(findNext(const QString &, Qt::CaseSensitivity)),
+                this,
+                SLOT(slotBuscarSiguiente(const QString &, Qt::CaseSensitivity)));
+        }
+        dialogoBuscar->show();
+}
+
+void VentanaPrincipal::slotBuscarSiguiente(const QString &str, Qt::CaseSensitivity cs){
+        qDebug()<< "La cadena que me han pasado es " << str;
 }
 
 

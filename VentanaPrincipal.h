@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QTextEdit>
 #include <QLabel>
+#include "findDialog.h"
 
 class VentanaPrincipal : public QMainWindow{
 Q_OBJECT
@@ -21,6 +22,7 @@ private:
     QAction * accionGuardar; 
     QAction * accionAbrir; 
     QAction * accionGuardarComo;
+    QAction * accionBuscar;
 
     QAction * accionesFicherosRecientes[MAX_FICHEROS_RECIENTES];
 
@@ -38,6 +40,8 @@ private:
     QString rutaArchivo;
     QStringList nomFichRec; //Nombres de ficheros recientes
 
+    FindDialog * dialogoBuscar;
+
     
 
 public slots:
@@ -46,6 +50,8 @@ public slots:
     void slotGuardarComo();
     void slotGuardar();
     void slotFicherosRecientes();
+    void slotDialogoBuscar();
+    void slotBuscarSiguiente(const QString &str, Qt::CaseSensitivity cs);
 
 };
 
