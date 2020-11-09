@@ -17,7 +17,7 @@ CXX           = g++
 DEFINES       = -DQT_DEPRECATED_WARNINGS -DQT_NO_DEBUG -DQT_WIDGETS_LIB -DQT_GUI_LIB -DQT_CORE_LIB
 CFLAGS        = -pipe -O2 -w -D_REENTRANT -fPIC $(DEFINES)
 CXXFLAGS      = -pipe -O2 -w -D_REENTRANT -fPIC $(DEFINES)
-INCPATH       = -I. -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
+INCPATH       = -I. -I. -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -I. -I. -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++
 QMAKE         = /usr/lib/qt5/bin/qmake
 DEL_FILE      = rm -f
 CHK_DIR_EXISTS= test -d
@@ -52,13 +52,17 @@ OBJECTS_DIR   = ./
 
 ####### Files
 
-SOURCES       = finDialog.cpp \
+SOURCES       = DialogoDeshacer.cpp \
+		finDialog.cpp \
 		main.cpp \
-		VentanaPrincipal.cpp moc_findDialog.cpp \
+		VentanaPrincipal.cpp moc_DialogoDeshacer.cpp \
+		moc_findDialog.cpp \
 		moc_VentanaPrincipal.cpp
-OBJECTS       = finDialog.o \
+OBJECTS       = DialogoDeshacer.o \
+		finDialog.o \
 		main.o \
 		VentanaPrincipal.o \
+		moc_DialogoDeshacer.o \
 		moc_findDialog.o \
 		moc_VentanaPrincipal.o
 DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -140,8 +144,10 @@ DIST          = /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/exceptions.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/yacc.prf \
 		/usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/lex.prf \
-		editor.pro findDialog.h \
-		VentanaPrincipal.h finDialog.cpp \
+		editor.pro DialogoDeshacer.h \
+		findDialog.h \
+		VentanaPrincipal.h DialogoDeshacer.cpp \
+		finDialog.cpp \
 		main.cpp \
 		VentanaPrincipal.cpp
 QMAKE_TARGET  = editor
@@ -152,7 +158,7 @@ TARGET        = editor
 first: all
 ####### Build rules
 
-editor:  $(OBJECTS)  
+editor: ui_DialogoDeshacer.h $(OBJECTS)  
 	$(LINK) $(LFLAGS) -o $(TARGET) $(OBJECTS) $(OBJCOMP) $(LIBS)
 
 Makefile: editor.pro /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++/qmake.conf /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/spec_pre.prf \
@@ -331,8 +337,9 @@ distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
 	$(COPY_FILE) --parents /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp $(DISTDIR)/
-	$(COPY_FILE) --parents findDialog.h VentanaPrincipal.h $(DISTDIR)/
-	$(COPY_FILE) --parents finDialog.cpp main.cpp VentanaPrincipal.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents DialogoDeshacer.h findDialog.h VentanaPrincipal.h $(DISTDIR)/
+	$(COPY_FILE) --parents DialogoDeshacer.cpp finDialog.cpp main.cpp VentanaPrincipal.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents DialogoDeshacer.ui $(DISTDIR)/
 
 
 clean: compiler_clean 
@@ -364,9 +371,15 @@ compiler_moc_predefs_clean:
 moc_predefs.h: /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 	g++ -pipe -O2 -w -dM -E -o moc_predefs.h /usr/lib/x86_64-linux-gnu/qt5/mkspecs/features/data/dummy.cpp
 
-compiler_moc_header_make_all: moc_findDialog.cpp moc_VentanaPrincipal.cpp
+compiler_moc_header_make_all: moc_DialogoDeshacer.cpp moc_findDialog.cpp moc_VentanaPrincipal.cpp
 compiler_moc_header_clean:
-	-$(DEL_FILE) moc_findDialog.cpp moc_VentanaPrincipal.cpp
+	-$(DEL_FILE) moc_DialogoDeshacer.cpp moc_findDialog.cpp moc_VentanaPrincipal.cpp
+moc_DialogoDeshacer.cpp: DialogoDeshacer.h \
+		ui_DialogoDeshacer.h \
+		moc_predefs.h \
+		/usr/lib/qt5/bin/moc
+	/usr/lib/qt5/bin/moc $(DEFINES) --include /home/mati/Documents/interfaces/Qt/editor/moc_predefs.h -I/usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -I/home/mati/Documents/interfaces/Qt/editor -I/home/mati/Documents/interfaces/Qt/editor -I/usr/include/x86_64-linux-gnu/qt5 -I/usr/include/x86_64-linux-gnu/qt5/QtWidgets -I/usr/include/x86_64-linux-gnu/qt5/QtGui -I/usr/include/x86_64-linux-gnu/qt5/QtCore -I/usr/include/c++/9 -I/usr/include/x86_64-linux-gnu/c++/9 -I/usr/include/c++/9/backward -I/usr/lib/gcc/x86_64-linux-gnu/9/include -I/usr/local/include -I/usr/include/x86_64-linux-gnu -I/usr/include DialogoDeshacer.h -o moc_DialogoDeshacer.cpp
+
 moc_findDialog.cpp: findDialog.h \
 		moc_predefs.h \
 		/usr/lib/qt5/bin/moc
@@ -382,17 +395,26 @@ compiler_moc_objc_header_make_all:
 compiler_moc_objc_header_clean:
 compiler_moc_source_make_all:
 compiler_moc_source_clean:
-compiler_uic_make_all:
+compiler_uic_make_all: ui_DialogoDeshacer.h
 compiler_uic_clean:
+	-$(DEL_FILE) ui_DialogoDeshacer.h
+ui_DialogoDeshacer.h: DialogoDeshacer.ui \
+		/usr/lib/qt5/bin/uic
+	/usr/lib/qt5/bin/uic DialogoDeshacer.ui -o ui_DialogoDeshacer.h
+
 compiler_yacc_decl_make_all:
 compiler_yacc_decl_clean:
 compiler_yacc_impl_make_all:
 compiler_yacc_impl_clean:
 compiler_lex_make_all:
 compiler_lex_clean:
-compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean 
+compiler_clean: compiler_moc_predefs_clean compiler_moc_header_clean compiler_uic_clean 
 
 ####### Compile
+
+DialogoDeshacer.o: DialogoDeshacer.cpp DialogoDeshacer.h \
+		ui_DialogoDeshacer.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o DialogoDeshacer.o DialogoDeshacer.cpp
 
 finDialog.o: finDialog.cpp findDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o finDialog.o finDialog.cpp
@@ -404,6 +426,9 @@ main.o: main.cpp VentanaPrincipal.h \
 VentanaPrincipal.o: VentanaPrincipal.cpp VentanaPrincipal.h \
 		findDialog.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o VentanaPrincipal.o VentanaPrincipal.cpp
+
+moc_DialogoDeshacer.o: moc_DialogoDeshacer.cpp 
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_DialogoDeshacer.o moc_DialogoDeshacer.cpp
 
 moc_findDialog.o: moc_findDialog.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_findDialog.o moc_findDialog.cpp

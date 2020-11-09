@@ -24,6 +24,7 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent) : QMainWindow(parent)
 
         //Inicializacion de dialogos
         dialogoBuscar = NULL;
+        dialogoDeshacer = NULL;
 
         //Ancho y alto de la ventana
         resize(800, 600);
@@ -82,6 +83,14 @@ void VentanaPrincipal::creaAcciones()
         accionBuscar->setToolTip("Buscar en documento");
         connect(accionBuscar, SIGNAL(triggered()),
                 this, SLOT(slotDialogoBuscar()));
+
+        accionDeshacer = new QAction("Deshacer", this);
+        accionDeshacer->setIcon(QIcon("./images/deshacer.jpeg"));
+        accionDeshacer->setShortcut(QKeySequence(tr("Ctrl+d")));
+        accionDeshacer->setStatusTip("Deshacer");
+        accionDeshacer->setToolTip("Deshacer");
+        connect(accionDeshacer, SIGNAL(triggered()),
+                this, SLOT(slotDialogoDeshacer()));
         
 }
 
@@ -108,6 +117,7 @@ void VentanaPrincipal::creaMenus()
         //Menu editar
         menuEditar = barra->addMenu(QString("Editar"));
         menuEditar->addAction(accionBuscar);
+        menuEditar->addAction(accionDeshacer);
         
 
         //Menu contextual
@@ -304,6 +314,20 @@ void VentanaPrincipal::slotDialogoBuscar(){
 
 void VentanaPrincipal::slotBuscarSiguiente(const QString &str, Qt::CaseSensitivity cs){
         qDebug()<< "La cadena que me han pasado es " << str;
+        
+        if(!editorCentral->find(str)){
+                editorCentral->moveCursor(QTextCursor::Start);
+        }
+}
+
+void VentanaPrincipal::slotDialogoDeshacer(){
+        if (dialogoBuscar == NULL){
+                dialogoDeshacer = new DialogoDeshacer(this);
+
+               
+               
+        }
+        dialogoDeshacer->show();
 }
 
 

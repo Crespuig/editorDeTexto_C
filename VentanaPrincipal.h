@@ -4,6 +4,7 @@
 #include <QTextEdit>
 #include <QLabel>
 #include "findDialog.h"
+#include "DialogoDeshacer.h"
 
 class VentanaPrincipal : public QMainWindow{
 Q_OBJECT
@@ -23,6 +24,7 @@ private:
     QAction * accionAbrir; 
     QAction * accionGuardarComo;
     QAction * accionBuscar;
+    QAction * accionDeshacer;
 
     QAction * accionesFicherosRecientes[MAX_FICHEROS_RECIENTES];
 
@@ -41,6 +43,7 @@ private:
     QStringList nomFichRec; //Nombres de ficheros recientes
 
     FindDialog * dialogoBuscar;
+    DialogoDeshacer * dialogoDeshacer;
 
     
 
@@ -52,6 +55,7 @@ public slots:
     void slotFicherosRecientes();
     void slotDialogoBuscar();
     void slotBuscarSiguiente(const QString &str, Qt::CaseSensitivity cs);
+    void slotDialogoDeshacer();
 
 };
 
