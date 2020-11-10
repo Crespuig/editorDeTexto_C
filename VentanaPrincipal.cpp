@@ -9,6 +9,7 @@
 #include <QStringList>
 #include <QDebug>
 #include <QVariant>
+#include <QCloseEvent>
 
 VentanaPrincipal::VentanaPrincipal(QWidget *parent) : QMainWindow(parent)
 {
@@ -210,9 +211,30 @@ void VentanaPrincipal::establecerFicheroActual(const QString & nuevaRuta){
         }
 }
 
-/*************************************************************************************************/
+/***************************************************************************************************/
 
-/******************************************** SLOTS **********************************************/
+/******************************************** EVENTOS **********************************************/
+
+void VentanaPrincipal::closeEvent(QCloseEvent *event){
+        //qDebug()<<"hello"<<endl;
+        QMessageBox::StandardButton botonSalir;
+
+        botonSalir = QMessageBox::warning(this,
+                                            "Salir",
+                                            "¿Quieres guardar?",
+                                            QMessageBox::Yes | QMessageBox::No);
+        if (botonSalir==QMessageBox::Yes){
+                slotGuardarComo();
+        }
+}
+        
+
+
+/***************************************************************************************************/
+
+
+
+/******************************************** SLOTS ************************************************/
 void VentanaPrincipal::slotNuevo()
 {
         rutaArchivo.clear();
@@ -322,7 +344,7 @@ void VentanaPrincipal::slotBuscarSiguiente(const QString &str, Qt::CaseSensitivi
 
 void VentanaPrincipal::slotDialogoDeshacer(){
         if (dialogoBuscar == NULL){
-                dialogoDeshacer = new DialogoDeshacer(this);
+                dialogoDeshacer = new DialogoDeshacer(editorCentral, this);
 
                
                

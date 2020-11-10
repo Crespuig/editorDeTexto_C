@@ -5,6 +5,8 @@
 #include <QLabel>
 #include "findDialog.h"
 #include "DialogoDeshacer.h"
+#include <QCloseEvent>
+
 
 class VentanaPrincipal : public QMainWindow{
 Q_OBJECT
@@ -13,6 +15,8 @@ public:
     VentanaPrincipal(QWidget *parent = 0);
 
     static const int MAX_FICHEROS_RECIENTES = 5;
+
+    void closeEvent(QCloseEvent *event);
     
 private:
     QTextEdit * editorCentral;

@@ -1,9 +1,12 @@
 #include "DialogoDeshacer.h"
 #include <QDebug>
+#include <QTextEdit>
 
 
-DialogoDeshacer::DialogoDeshacer(QWidget * parent) : QDialog(parent){
+DialogoDeshacer::DialogoDeshacer(QTextEdit * punteroPasado, QWidget * parent) : QDialog(parent){
     setupUi(this);
+
+    punteroATextEdit = punteroPasado;
 
     connect(botonDeshacer, SIGNAL(clicked()),
           this, SLOT(slotBotonDeshacer()));
@@ -14,9 +17,13 @@ DialogoDeshacer::DialogoDeshacer(QWidget * parent) : QDialog(parent){
     
 }
 void DialogoDeshacer::slotBotonDeshacer(){
-        qDebug()<< "Deshacer"<<endl;
+        //qDebug()<< "Deshacer"<<endl;
+        punteroATextEdit->undo();
+        punteroATextEdit->undo();
     }
 
 void DialogoDeshacer::slotBotonRehacer(){
-        qDebug()<< "Rehacer"<<endl;
+        //qDebug()<< "Rehacer"<<endl;
+        punteroATextEdit->redo();
+        punteroATextEdit->redo();
     }
