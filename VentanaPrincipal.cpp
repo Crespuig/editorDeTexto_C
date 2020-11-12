@@ -12,6 +12,7 @@
 #include <QCloseEvent>
 #include <QPalette>
 #include <QColor>
+#include <QHideEvent>
 
 VentanaPrincipal::VentanaPrincipal(QWidget *parent) : QMainWindow(parent)
 {
@@ -106,7 +107,7 @@ void VentanaPrincipal::creaAcciones()
                 this, SLOT(slotDialogoDeshacer()));
 
         accionElegirColor = new QAction("Elegir Color", this);
-        accionElegirColor->setIcon(QIcon(""));
+        accionElegirColor->setIcon(QIcon("./images/color.png"));
         accionElegirColor->setShortcut(QKeySequence(tr("Ctrl+d")));
         accionElegirColor->setStatusTip("Elegir Color");
         accionElegirColor->setToolTip("Elegir Color");
@@ -250,6 +251,14 @@ void VentanaPrincipal::closeEvent(QCloseEvent *event){
                 slotGuardarComo();
         }
 }
+
+/*void VentanaPrincipal::hideEvent(QHidevent *event){
+        int resultado = result();
+        if (result == Accepted){
+                
+        }
+        
+}*/
         
 
 
