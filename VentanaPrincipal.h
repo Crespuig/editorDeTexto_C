@@ -5,6 +5,7 @@
 #include <QLabel>
 #include "findDialog.h"
 #include "DialogoDeshacer.h"
+#include "DialogoElegirColor.h"
 #include <QCloseEvent>
 
 
@@ -29,12 +30,14 @@ private:
     QAction * accionGuardarComo;
     QAction * accionBuscar;
     QAction * accionDeshacer;
+    QAction * accionElegirColor;
 
     QAction * accionesFicherosRecientes[MAX_FICHEROS_RECIENTES];
 
     //Menus
     QMenu *menuArchivo;
     QMenu *menuEditar;
+    QMenu *menuConfiguracion;
     QLabel *textoEstado;
     
     void creaAcciones();
@@ -48,6 +51,7 @@ private:
 
     FindDialog * dialogoBuscar;
     DialogoDeshacer * dialogoDeshacer;
+    DialogoElegirColor * dialogoElegirColor;
 
     
 
@@ -60,6 +64,7 @@ public slots:
     void slotDialogoBuscar();
     void slotBuscarSiguiente(const QString &str, Qt::CaseSensitivity cs);
     void slotDialogoDeshacer();
+    void slotDialogoElegirColor();
 
 };
 

@@ -10,6 +10,8 @@
 #include <QDebug>
 #include <QVariant>
 #include <QCloseEvent>
+#include <QPalette>
+#include <QColor>
 
 VentanaPrincipal::VentanaPrincipal(QWidget *parent) : QMainWindow(parent)
 {
@@ -29,6 +31,16 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent) : QMainWindow(parent)
 
         //Ancho y alto de la ventana
         resize(800, 600);
+
+        //cambiar color
+        //QColor = QDialogoElegirColor::execute();
+
+        /*QColor color = QColor(150, 246, 150);
+
+        QPalette palette = editorCentral->palette();
+        palette.setColor(QPalette::Base, color);
+        palette.setColor(QPalette::Text, Qt::magenta);
+        editorCentral->setPalette(palette);*/
 }
 
 /******************************************** CREAR ACCIONES ***************************************************/
@@ -92,6 +104,14 @@ void VentanaPrincipal::creaAcciones()
         accionDeshacer->setToolTip("Deshacer");
         connect(accionDeshacer, SIGNAL(triggered()),
                 this, SLOT(slotDialogoDeshacer()));
+
+        accionElegirColor = new QAction("Elegir Color", this);
+        accionElegirColor->setIcon(QIcon(""));
+        accionElegirColor->setShortcut(QKeySequence(tr("Ctrl+d")));
+        accionElegirColor->setStatusTip("Elegir Color");
+        accionElegirColor->setToolTip("Elegir Color");
+        connect(accionElegirColor, SIGNAL(triggered()),
+                this, SLOT(slotDialogoElegirColor()));
         
 }
 
@@ -119,7 +139,10 @@ void VentanaPrincipal::creaMenus()
         menuEditar = barra->addMenu(QString("Editar"));
         menuEditar->addAction(accionBuscar);
         menuEditar->addAction(accionDeshacer);
-        
+
+        //Mneu configuracion
+        menuConfiguracion = barra->addMenu(QString("Configuración"));
+        menuConfiguracion->addAction(accionElegirColor);
 
         //Menu contextual
         editorCentral->addAction(accionSalir);
@@ -350,6 +373,11 @@ void VentanaPrincipal::slotDialogoDeshacer(){
                
         }
         dialogoDeshacer->show();
+}
+
+void VentanaPrincipal::slotDialogoElegirColor(){
+        dialogoElegirColor = new DialogoElegirColor(editorCentral, this);
+        dialogoElegirColor->show();
 }
 
 
