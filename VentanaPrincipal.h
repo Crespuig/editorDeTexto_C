@@ -6,6 +6,7 @@
 #include "findDialog.h"
 #include "DialogoDeshacer.h"
 #include "DialogoElegirColor.h"
+#include "DialogoListaColores.h"
 #include <QCloseEvent>
 
 
@@ -16,6 +17,8 @@ public:
     VentanaPrincipal(QWidget *parent = 0);
 
     static const int MAX_FICHEROS_RECIENTES = 5;
+    static const int MAX_COLORES_RECIENTES = 5;
+
 
     void closeEvent(QCloseEvent *event);
     
@@ -31,8 +34,10 @@ private:
     QAction * accionBuscar;
     QAction * accionDeshacer;
     QAction * accionElegirColor;
+    QAction * accionListaColores;
 
     QAction * accionesFicherosRecientes[MAX_FICHEROS_RECIENTES];
+    //QAction * accionesColoresRecientes[MAX_COLORES_RECIENTES];
 
     //Menus
     QMenu *menuArchivo;
@@ -52,9 +57,9 @@ private:
     FindDialog * dialogoBuscar;
     DialogoDeshacer * dialogoDeshacer;
     DialogoElegirColor * dialogoElegirColor;
+    DialogoListaColores * dialogoListaColores;
 
     
-
 public slots:
     void slotNuevo();
     void slotAbrir();
@@ -65,6 +70,7 @@ public slots:
     void slotBuscarSiguiente(const QString &str, Qt::CaseSensitivity cs);
     void slotDialogoDeshacer();
     void slotDialogoElegirColor();
+    void slotDialogoListaColores();
 
 };
 

@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_VentanaPrincipal_t {
-    QByteArrayData data[14];
-    char stringdata0[196];
+    QByteArrayData data[15];
+    char stringdata0[220];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -44,14 +44,16 @@ QT_MOC_LITERAL(9, 126, 3), // "str"
 QT_MOC_LITERAL(10, 130, 19), // "Qt::CaseSensitivity"
 QT_MOC_LITERAL(11, 150, 2), // "cs"
 QT_MOC_LITERAL(12, 153, 19), // "slotDialogoDeshacer"
-QT_MOC_LITERAL(13, 173, 22) // "slotDialogoElegirColor"
+QT_MOC_LITERAL(13, 173, 22), // "slotDialogoElegirColor"
+QT_MOC_LITERAL(14, 196, 23) // "slotDialogoListaColores"
 
     },
     "VentanaPrincipal\0slotNuevo\0\0slotAbrir\0"
     "slotGuardarComo\0slotGuardar\0"
     "slotFicherosRecientes\0slotDialogoBuscar\0"
     "slotBuscarSiguiente\0str\0Qt::CaseSensitivity\0"
-    "cs\0slotDialogoDeshacer\0slotDialogoElegirColor"
+    "cs\0slotDialogoDeshacer\0slotDialogoElegirColor\0"
+    "slotDialogoListaColores"
 };
 #undef QT_MOC_LITERAL
 
@@ -61,7 +63,7 @@ static const uint qt_meta_data_VentanaPrincipal[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      10,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -69,15 +71,16 @@ static const uint qt_meta_data_VentanaPrincipal[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   59,    2, 0x0a /* Public */,
-       3,    0,   60,    2, 0x0a /* Public */,
-       4,    0,   61,    2, 0x0a /* Public */,
-       5,    0,   62,    2, 0x0a /* Public */,
-       6,    0,   63,    2, 0x0a /* Public */,
-       7,    0,   64,    2, 0x0a /* Public */,
-       8,    2,   65,    2, 0x0a /* Public */,
-      12,    0,   70,    2, 0x0a /* Public */,
-      13,    0,   71,    2, 0x0a /* Public */,
+       1,    0,   64,    2, 0x0a /* Public */,
+       3,    0,   65,    2, 0x0a /* Public */,
+       4,    0,   66,    2, 0x0a /* Public */,
+       5,    0,   67,    2, 0x0a /* Public */,
+       6,    0,   68,    2, 0x0a /* Public */,
+       7,    0,   69,    2, 0x0a /* Public */,
+       8,    2,   70,    2, 0x0a /* Public */,
+      12,    0,   75,    2, 0x0a /* Public */,
+      13,    0,   76,    2, 0x0a /* Public */,
+      14,    0,   77,    2, 0x0a /* Public */,
 
  // slots: parameters
     QMetaType::Void,
@@ -87,6 +90,7 @@ static const uint qt_meta_data_VentanaPrincipal[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QString, 0x80000000 | 10,    9,   11,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -108,6 +112,7 @@ void VentanaPrincipal::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int
         case 6: _t->slotBuscarSiguiente((*reinterpret_cast< const QString(*)>(_a[1])),(*reinterpret_cast< Qt::CaseSensitivity(*)>(_a[2]))); break;
         case 7: _t->slotDialogoDeshacer(); break;
         case 8: _t->slotDialogoElegirColor(); break;
+        case 9: _t->slotDialogoListaColores(); break;
         default: ;
         }
     }
@@ -142,13 +147,13 @@ int VentanaPrincipal::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 10)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 10;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 9)
+        if (_id < 10)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 9;
+        _id -= 10;
     }
     return _id;
 }

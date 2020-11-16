@@ -29,6 +29,7 @@ VentanaPrincipal::VentanaPrincipal(QWidget *parent) : QMainWindow(parent)
         //Inicializacion de dialogos
         dialogoBuscar = NULL;
         dialogoDeshacer = NULL;
+        dialogoListaColores = NULL;
 
         //Ancho y alto de la ventana
         resize(800, 600);
@@ -113,6 +114,14 @@ void VentanaPrincipal::creaAcciones()
         accionElegirColor->setToolTip("Elegir Color");
         connect(accionElegirColor, SIGNAL(triggered()),
                 this, SLOT(slotDialogoElegirColor()));
+
+        accionListaColores = new QAction("Lista colores", this);
+        accionListaColores->setIcon(QIcon("./images/color.png"));
+        accionListaColores->setShortcut(QKeySequence(tr("Ctrl+d")));
+        accionListaColores->setStatusTip("Lista colores");
+        accionListaColores->setToolTip("Lista colores");
+        connect(accionListaColores, SIGNAL(triggered()),
+                this, SLOT(slotDialogoListaColores()));
         
 }
 
@@ -141,9 +150,10 @@ void VentanaPrincipal::creaMenus()
         menuEditar->addAction(accionBuscar);
         menuEditar->addAction(accionDeshacer);
 
-        //Mneu configuracion
+        //Menu configuracion
         menuConfiguracion = barra->addMenu(QString("Configuración"));
         menuConfiguracion->addAction(accionElegirColor);
+        menuConfiguracion->addAction(accionListaColores);
 
         //Menu contextual
         editorCentral->addAction(accionSalir);
@@ -252,13 +262,7 @@ void VentanaPrincipal::closeEvent(QCloseEvent *event){
         }
 }
 
-/*void VentanaPrincipal::hideEvent(QHidevent *event){
-        int resultado = result();
-        if (result == Accepted){
-                
-        }
-        
-}*/
+
         
 
 
@@ -376,17 +380,23 @@ void VentanaPrincipal::slotBuscarSiguiente(const QString &str, Qt::CaseSensitivi
 
 void VentanaPrincipal::slotDialogoDeshacer(){
         if (dialogoBuscar == NULL){
-                dialogoDeshacer = new DialogoDeshacer(editorCentral, this);
-
-               
-               
+                dialogoDeshacer = new DialogoDeshacer(editorCentral, this);     
         }
         dialogoDeshacer->show();
 }
 
 void VentanaPrincipal::slotDialogoElegirColor(){
-        dialogoElegirColor = new DialogoElegirColor(editorCentral, this);
+        if (dialogoBuscar == NULL){
+                dialogoElegirColor = new DialogoElegirColor(editorCentral, this);
+        }
         dialogoElegirColor->show();
+}
+
+void VentanaPrincipal::slotDialogoListaColores(){
+        if (dialogoBuscar == NULL){
+                dialogoListaColores = new DialogoListaColores(editorCentral, this);
+        }
+        dialogoListaColores->show();
 }
 
 

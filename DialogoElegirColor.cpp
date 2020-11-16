@@ -5,12 +5,12 @@
 #include <QTextEdit>
 #include <QPalette>
 
-
-
 DialogoElegirColor::DialogoElegirColor(QTextEdit * punteroPasado, QWidget * parent) : QDialog(parent){
     setupUi(this);
 
     punteroATextEdit = punteroPasado;
+
+    paletaOriginal = punteroATextEdit->palette();
 
     connect(elegirColor, SIGNAL(clicked()),
           this, SLOT(slotBotonElegirColor()));
@@ -30,5 +30,14 @@ void DialogoElegirColor::slotBotonProbarColor(){
         QPalette palette = punteroATextEdit->palette();
         palette.setColor(QPalette::Base, color);
         punteroATextEdit->setPalette(palette);
+}
+
+void DialogoElegirColor::hideEvent(QHideEvent *event){
+        if (this->result() == Accepted){
+            slotBotonProbarColor();
+        }else{
+            punteroATextEdit->setPalette(paletaOriginal);
+        }
+        
 }
 
